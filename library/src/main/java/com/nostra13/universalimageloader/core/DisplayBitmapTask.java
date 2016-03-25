@@ -44,6 +44,7 @@ final class DisplayBitmapTask implements Runnable {
 	private final ImageLoadingListener listener;
 	private final ImageLoaderEngine engine;
 	private final LoadedFrom loadedFrom;
+	private final DisplayImageOptions options;
 
 	public DisplayBitmapTask(Bitmap bitmap, ImageLoadingInfo imageLoadingInfo, ImageLoaderEngine engine,
 			LoadedFrom loadedFrom) {
@@ -55,6 +56,7 @@ final class DisplayBitmapTask implements Runnable {
 		listener = imageLoadingInfo.listener;
 		this.engine = engine;
 		this.loadedFrom = loadedFrom;
+		this.options = imageLoadingInfo.options;
 	}
 
 	@Override
@@ -75,6 +77,10 @@ final class DisplayBitmapTask implements Runnable {
 
 	/** Checks whether memory cache key (image URI) for current ImageAware is actual */
 	private boolean isViewWasReused() {
+		if(options.isSkipReuseCheck()) {
+			return false;
+		}
+
 		String currentCacheKey = engine.getLoadingUriForView(imageAware);
 		return !memoryCacheKey.equals(currentCacheKey);
 	}
