@@ -488,6 +488,7 @@ public final class DisplayImageOptions {
 			displayer = options.displayer;
 			handler = options.handler;
 			isSyncLoading = options.isSyncLoading;
+			skipReuseCheck = options.skipReuseCheck;
 			return this;
 		}
 
