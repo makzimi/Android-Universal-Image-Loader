@@ -429,13 +429,15 @@ final class LoadAndDisplayImageTask implements Runnable, IoUtils.CopyListener {
 
 	/** @return <b>true</b> - if current ImageAware is reused for displaying another image; <b>false</b> - otherwise */
 	private boolean isViewReused() {
-		String currentCacheKey = engine.getLoadingUriForView(imageAware);
-		// Check whether memory cache key (image URI) for current ImageAware is actual.
-		// If ImageAware is reused for another task then current task should be cancelled.
-		boolean imageAwareWasReused = !memoryCacheKey.equals(currentCacheKey);
-		if (imageAwareWasReused) {
-			L.d(LOG_TASK_CANCELLED_IMAGEAWARE_REUSED, memoryCacheKey);
-			return true;
+		if(!options.isSkipReuseCheck()) {
+			String currentCacheKey = engine.getLoadingUriForView(imageAware);
+			// Check whether memory cache key (image URI) for current ImageAware is actual.
+			// If ImageAware is reused for another task then current task should be cancelled.
+			boolean imageAwareWasReused = !memoryCacheKey.equals(currentCacheKey);
+			if (imageAwareWasReused) {
+				L.d(LOG_TASK_CANCELLED_IMAGEAWARE_REUSED, memoryCacheKey);
+				return true;
+			}
 		}
 		return false;
 	}

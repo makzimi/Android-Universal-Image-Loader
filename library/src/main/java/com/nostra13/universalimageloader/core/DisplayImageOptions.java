@@ -83,6 +83,7 @@ public final class DisplayImageOptions {
 	private final BitmapDisplayer displayer;
 	private final Handler handler;
 	private final boolean isSyncLoading;
+	private final boolean skipReuseCheck;
 
 	private DisplayImageOptions(Builder builder) {
 		imageResOnLoading = builder.imageResOnLoading;
@@ -104,6 +105,7 @@ public final class DisplayImageOptions {
 		displayer = builder.displayer;
 		handler = builder.handler;
 		isSyncLoading = builder.isSyncLoading;
+		skipReuseCheck = builder.skipReuseCheck;
 	}
 
 	public boolean shouldShowImageOnLoading() {
@@ -194,6 +196,10 @@ public final class DisplayImageOptions {
 		return isSyncLoading;
 	}
 
+	public boolean isSkipReuseCheck() {
+		return skipReuseCheck;
+	}
+
 	/**
 	 * Builder for {@link DisplayImageOptions}
 	 *
@@ -219,6 +225,7 @@ public final class DisplayImageOptions {
 		private BitmapDisplayer displayer = DefaultConfigurationFactory.createBitmapDisplayer();
 		private Handler handler = null;
 		private boolean isSyncLoading = false;
+		private boolean skipReuseCheck = false;
 
 		/**
 		 * Stub image will be displayed in {@link com.nostra13.universalimageloader.core.imageaware.ImageAware
@@ -360,6 +367,11 @@ public final class DisplayImageOptions {
 		/** Sets whether loaded image will be cached on disk */
 		public Builder cacheOnDisk(boolean cacheOnDisk) {
 			this.cacheOnDisk = cacheOnDisk;
+			return this;
+		}
+
+		public Builder skipReuseCheck(boolean skipReuseCheck) {
+			this.skipReuseCheck = skipReuseCheck;
 			return this;
 		}
 
